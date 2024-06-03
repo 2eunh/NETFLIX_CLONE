@@ -1,114 +1,65 @@
 import { useQuery } from "react-query";
-import { IGetMoviesResult, getMovies } from "../api";
+import {
+  IGetMoviesResult,
+  getNowPlaying,
+  getPopular,
+  getTopRated,
+  getUpcoming,
+} from "../api";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import Slider from "../Components/Slider";
+import { BsInfoCircle } from "react-icons/bs";
+import { FaPlay } from "react-icons/fa";
+import { Banner, InfoBtn, Loader, Overview, PlayBtn, SliderLow, Title, Wrapper } from "../styles/HomeStyled";
 
-const Wrapper = styled.div`
-  background: black;
-  overflow-x: hidden;
-`;
-
-const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Banner = styled.div<{ bgPhoto: string }>`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)),
-    //배경에 그라데이션 넣어줌
-    url(${(props) => props.bgPhoto});
-  background-repeat: cover;
-`;
-
-const Title = styled.h2`
-  font-size: 58px;
-  margin-bottom: 20px;
-`;
-const Overview = styled.p`
-  font-size: 26px;
-  width: 50%;
-`;
-
-const Slider = styled(motion.div)`
-  position: relative;
-  top: -100px;
-`;
-const Row = styled(motion.div)`
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
-`;
-const Box = styled(motion.div)`
-  background-color: white;
-  height: 200px;
-  color: red;
-`;
-
-const rowVariants = {
-  hidden: {
-    x: window.outerWidth,
-  },
-  visible: {
-    x: 0,
-  },
-  exit: {
-    x: -window.outerWidth,
-  },
-};
 
 function Home() {
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
-    ["movies", "nowPlaying"],
-    getMovies
-  );
-  const [index, setIndex] = useState(0);
-  const incraseIndex = () => {
-    if(leaving) return;
-    toggleLeaving();
-    setIndex((prev) => prev + 1);
-  };
-  const toggleLeaving = () => setLeaving((prev) => !prev);
-  const [leaving, setLeaving] = useState(false);
+  const { data: nowPlaying, isLoading: nowPlayingIsLoading } =
+    useQuery<IGetMoviesResult>("movies", () => getNowPlaying());
+  const { data: popular, isLoading: popularIsLoading } =
+    useQuery<IGetMoviesResult>("popular", () => getPopular());
+  const { data: topRated, isLoading: topRatedIsLoading } =
+    useQuery<IGetMoviesResult>("topRated", () => getTopRated());
+  const { data: upcoming, isLoading: upcomingIsLoading } =
+    useQuery<IGetMoviesResult>("upcoming", () => getUpcoming());
+
   return (
     <Wrapper>
-      {isLoading ? (
+      {nowPlayingIsLoading ||
+      popularIsLoading ||
+      topRatedIsLoading ||
+      upcomingIsLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
           <Banner
-            onClick={incraseIndex}
-            bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
+            // onClick={incraseIndex}
+            bgPhoto={makeImagePath(popular?.results[0].backdrop_path || "")}
           >
-            <Title>{data?.results[0].title}</Title>
-            <Overview>{data?.results[0].overview}</Overview>
+            <Title>{popular?.results[0].title}</Title>
+            <Overview>{popular?.results[0].overview}</Overview>
+            <div className="btn-area">
+              <PlayBtn className="btn">
+                <FaPlay className="btn-icon" /> Play
+              </PlayBtn>
+              <InfoBtn className="btn">
+                <BsInfoCircle className="btn-icon" /> Information
+              </InfoBtn>
+            </div>
           </Banner>
-          <Slider>
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-              <Row
-                variants={rowVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                key={index}
-                transition={{ type: "tween", duration: 1 }}
-              >
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <Box key={i}>{i}</Box>
-                ))}
-              </Row>
-            </AnimatePresence>
-          </Slider>
+          {/* <SliderLow>
+            <Slider data={nowPlaying} title="Now Playing" category="now"/>
+          </SliderLow> */}
+          <SliderLow>
+            <Slider data={popular} title="Popular Movies" category="popular" />
+          </SliderLow>
+          <SliderLow>
+            <Slider data={topRated} title="Top Rated" category="top" />
+          </SliderLow>
+          <SliderLow>
+            <Slider data={upcoming} title="Upcoming" category="upc" />
+          </SliderLow>
         </>
       )}
     </Wrapper>
