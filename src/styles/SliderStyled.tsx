@@ -71,6 +71,7 @@ export const MovieModal = styled(motion.div)`
   border-radius: 15px;
   overflow: hidden;
   background-color: ${(props) => props.theme.black.lighter};
+  z-index: 9;
 `;
 
 export const ModalCover = styled.img`
@@ -93,11 +94,12 @@ export const LeftSlideButton = styled(motion.div)`
   z-index: 99;
   top: 120px;
   margin: 0 10px;
-  opacity: 0.5;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease; // 여기에 transition 추가
   &:hover {
     cursor: pointer;
-    scale: 1.1;
-    opacity: 0.9;
+    transform: scale(1.1); // scale 속성을 transform으로 변경
+    opacity: 0.7;
   }
 `;
 
@@ -107,13 +109,15 @@ export const RightSlideButton = styled(motion.div)`
   top: 120px;
   margin: 0 10px;
   right: 0;
-  opacity: 0.5;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease; 
   &:hover {
     cursor: pointer;
-    scale: 1.1;
-    opacity: 0.9;
+    transform: scale(1.1);
+    opacity: 0.7;
   }
 `;
+
 
 export const rowVariants = {
   hidden: {
