@@ -9,7 +9,6 @@ import MovieDetailModal from "./MovieDetailModal";
 const offset = 6;
 
 function Slider({ data, title, category }: any) {
-  console.log(data, title, category);
   const [slideDir, setSlideDir] = useState(1);
   const navigate = useNavigate();
   // const modalMovieMatch: PathMatch<string> | null =
@@ -17,6 +16,8 @@ function Slider({ data, title, category }: any) {
   // const { scrollY } = useScroll();
   const [index, setIndex] = useState(0);
 
+
+  // 슬라이더 동작 버튼
   const incraseIndex = () => {
     if (data) {
       if (leaving) return;
@@ -38,10 +39,11 @@ function Slider({ data, title, category }: any) {
     }
   };
 
+  //무비 박스 클릭 이벤트
   const toggleLeaving = () => setLeaving((prev) => !prev);
   const [leaving, setLeaving] = useState(false);
   const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
+    navigate(`/movies/${movieId}/${category}`);
   };
   // const onOverlayClick = () => navigate("/");
   // const clickedMovie =
@@ -50,12 +52,11 @@ function Slider({ data, title, category }: any) {
   //     (movie: any) => String(movie.id) === modalMovieMatch.params.movieId
   //   );
 
-  // 확인: 데이터의 모든 항목이 고유한 ID를 갖는지 점검
-  console.log(data.results.map((movie: { id: any; }) => movie.id));
 
   return (
-    <Sliders key={`sliders-${category}`}>
-      <SliderTitle key={`slider-title-${category}`}>{title}</SliderTitle>
+    <>
+      <Sliders >
+        <SliderTitle>{title}</SliderTitle>
         <AnimatePresence custom={slideDir} initial={false} onExitComplete={toggleLeaving}>
           <LeftSlideButton key={`left-button-${category}`} onClick={decreaseIndex}>
             <FaChevronCircleLeft size="50" />
@@ -75,16 +76,17 @@ function Slider({ data, title, category }: any) {
               .map((movie :any) => (
                 <Box
                   layoutId={`${category}-${movie.id}`} // layoutId에 고유한 값 설정
+                  // layoutId={movie.id + ""} // layoutId에 고유한 값 설정
                   bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
-                  key={`${category}-${movie.id}`} // Box에 고유한 key 설정
+                  key={movie.id} // Box에 고유한 key 설정
                   whileHover="hover"
                   initial="normal"
                   variants={boxVariants}
                   transition={{ type: "tween" }}
                   onClick={() => onBoxClicked(movie.id)}
                 >
-                  <Info key={`info-${category}-${movie.id}`} variants={infoVariants}>
-                    <h4 key={`title-${category}-${movie.id}`}>{movie.title}</h4>
+                  <Info  variants={infoVariants}>
+                    <h4>{movie.title}</h4>
                   </Info>
                 </Box>
               ))}
@@ -94,6 +96,9 @@ function Slider({ data, title, category }: any) {
           </RightSlideButton>
         </AnimatePresence>
       </Sliders>
+    </>
+
+      
     );
   }
 

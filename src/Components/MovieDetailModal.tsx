@@ -2,29 +2,23 @@ import { useScroll } from "framer-motion";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import { ModalCover, ModalTitle, MovieModal, Overlay } from "../styles/SliderStyled";
 import { makeImagePath } from "../utils";
+import { useQuery } from "react-query";
+import { IGetMoviesResult, getMovieDetail } from "../api";
 
-function MovieDetailModal ({modalMovieMatch,clickedMovie, scrollY } : any) {
+function MovieDetailModal ({category, modalMovieMatch, clickedMovie, scrollY } : any) {
   
-  // const navigate = useNavigate();
-  // const onOverlayClick = () => navigate("/");
-  // const { scrollY } = useScroll();
-  // const modalMovieMatch: PathMatch<string> | null =
-  //   useMatch("/movies/:movieId");
-  // const clickedMovie =
-  //   modalMovieMatch?.params.movieId &&
-  //   data?.results.find(
-  //     (movie: any) => String(movie.id) === modalMovieMatch.params.movieId
-  //   );
+  if (!clickedMovie) {
+    return null;
+  }
 
-  console.log(modalMovieMatch,clickedMovie, scrollY);
-  console.log(clickedMovie);
-  console.log(scrollY);
+  console.log(category);
   
-
+  
   return (
     <MovieModal
       style={{ top: scrollY + 100 }}
-      layoutId={modalMovieMatch.params.movieId}
+      // layoutId={modalMovieMatch.params.movieId}
+      layoutId={`${category}-${clickedMovie.id}`}
     >
       {clickedMovie && (
         <>
@@ -37,6 +31,7 @@ function MovieDetailModal ({modalMovieMatch,clickedMovie, scrollY } : any) {
             }}
           />
           <ModalTitle>{clickedMovie.title}</ModalTitle>
+          <div>ddd</div>
         </>
       )}
     </MovieModal>

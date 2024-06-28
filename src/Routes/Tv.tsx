@@ -1,6 +1,10 @@
+import { Wrapper } from "../styles/HomeStyled";
+
+
+
 function Tv() {
   return (
-    <h1>Tv</h1>
+    <Wrapper></Wrapper>
   );
 }
 

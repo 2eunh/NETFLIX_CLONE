@@ -10,6 +10,7 @@ interface IMovie {
 }
 
 export interface IGetMoviesResult {
+  backdrop_path(backdrop_path: any, arg1: string): unknown;
   dates: {
     maximum: string;
     minimum: string;
@@ -19,6 +20,8 @@ export interface IGetMoviesResult {
   total_pages: number;
   total_results: number;
 }
+
+/////*************movies */
 
 //now palying
 export function getNowPlaying() {
@@ -44,3 +47,13 @@ export function getUpcoming() {
     (response) => response.json()
   );
 }
+
+//movie detail
+export function getMovieDetail(movieId? : any) {
+  return fetch(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
+
+/////*********Tv shows */
