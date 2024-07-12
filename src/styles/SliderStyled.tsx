@@ -74,20 +74,7 @@ export const MovieModal = styled(motion.div)`
   z-index: 9;
 `;
 
-export const ModalCover = styled.img`
-  width: 100%;
-  height: 400px;
-  background-size: cover;
-  background-position: center center;
-`;
 
-export const ModalTitle = styled.h2`
-  color: ${(props) => props.theme.white.lighter};
-  padding: 20px;
-  font-size: 46px;
-  position: relative;
-  top: -80px;
-`;
 
 export const LeftSlideButton = styled(motion.div)`
   position: absolute;

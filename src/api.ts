@@ -1,5 +1,5 @@
 const API_KEY = "5c3a194094fa8ee8d190bf4351edad21";
-const BASE_PATH = "https://api.themoviedb.org/3/";
+const BASE_PATH = "https://api.themoviedb.org/3";
 
 interface IMovie {
   id: number;
@@ -7,6 +7,16 @@ interface IMovie {
   poster_path: string;
   title: string;
   overview: string;
+}
+export interface IMovieDetails {
+  id: number;
+  backdrop_path: string;
+  poster_path: string;
+  title: string;
+  overview: string;
+  release_date: string;
+  genres: [{ id: number; name: string }];
+  vote_average : number;
 }
 
 export interface IGetMoviesResult {
@@ -51,6 +61,12 @@ export function getUpcoming() {
 //movie detail
 export function getMovieDetail(movieId? : any) {
   return fetch(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`).then(
+    (response) => response.json()
+  );
+}
+
+export function getMovieVideo(movieId? : any) {
+  return fetch(`${BASE_PATH}/movie/${movieId}/videos?api_key=${API_KEY}`).then(
     (response) => response.json()
   );
 }

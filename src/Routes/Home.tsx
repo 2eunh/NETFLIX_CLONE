@@ -1,7 +1,9 @@
 import { useQuery } from "react-query";
 import {
   IGetMoviesResult,
+  IMovieDetails,
   getMovieDetail,
+  getMovieVideo,
   getNowPlaying,
   getPopular,
   getTopRated,
@@ -28,51 +30,38 @@ import MovieDetailModal from "../Components/MovieDetailModal";
 import { useEffect, useState } from "react";
 
 function Home() {
-
   const [selectedMovieId, setSelectedMovieId] = useState<string | null>(null);
-  const [selectedMovieCategory, setSelectedMovieCategory] = useState<string | null>(null);
+  const [selectedMovieCategory, setSelectedMovieCategory] = useState<
+    string | null
+  >(null);
   const { scrollY } = useScroll();
   const navigate = useNavigate();
   const onOverlayClick = () => navigate("/");
-  const modalMovieMatch: PathMatch<string> | null =
-    useMatch("/movies/:movieId/:category");
-
-  //데이터에 카테고리 항목 추가
-  const addCategory = (data: IGetMoviesResult, category: string) => ({
-    ...data,
-    results: data.results.map((movie: any) => ({
-      ...movie,
-      category,
-    })),
-  });
-
+  const modalMovieMatch: PathMatch<string> | null = useMatch(
+    "/movies/:category/:movieId"
+  );
   //데이터 받아오기
   const { data: nowPlaying, isLoading: nowPlayingIsLoading } =
-    useQuery<IGetMoviesResult>("movies", () => getNowPlaying(), {
-      select: (data) => addCategory(data, "nowPlaying"),
-    });
+    useQuery<IGetMoviesResult>("movies", () => getNowPlaying());
   const { data: popular, isLoading: popularIsLoading } =
-    useQuery<IGetMoviesResult>("popular", () => getPopular(), {
-      select: (data) => addCategory(data, "popular"),
-    });
+    useQuery<IGetMoviesResult>("popular", () => getPopular());
   const { data: topRated, isLoading: topRatedIsLoading } =
-    useQuery<IGetMoviesResult>("topRated", () => getTopRated(), {
-      select: (data) => addCategory(data, "topRated"),
-    });
+    useQuery<IGetMoviesResult>("topRated", () => getTopRated());
   const { data: upcoming, isLoading: upcomingIsLoading } =
-    useQuery<IGetMoviesResult>("upcoming", () => getUpcoming(), {
-      select: (data) => addCategory(data, "upcoming"),
-    });
-  const { data: movieDetail, isLoading: detailLoading } = useQuery(
-    ["movieDetail", selectedMovieId],
-    () => getMovieDetail(selectedMovieId)
-  );
+    useQuery<IGetMoviesResult>("upcoming", () => getUpcoming());
+  const { data: movieDetail, isLoading: detailLoading } =
+    useQuery<IMovieDetails>(["movieDetail", selectedMovieId], () =>
+      getMovieDetail(selectedMovieId)
+    );
+  const { data: movieViedo, isLoading: videoLoading } =
+    useQuery<IMovieDetails>(["movieVideo", selectedMovieId], () =>
+      getMovieVideo(selectedMovieId)
+    );
 
-  
-
-  const clickInfo = () => {
-    const bannerMovie = popular?.results[0];
-  };
+    
+    const clickInfo = (movieId: any, category: string) => {
+      navigate(`/movies/${category}/${movieId}`);
+    };
 
   //클릭한 무비의 아이디 셋팅
   useEffect(() => {
@@ -102,7 +91,7 @@ function Home() {
               <PlayBtn className="btn">
                 <FaPlay className="btn-icon" /> Play
               </PlayBtn>
-              <InfoBtn className="btn" onClick={clickInfo}>
+              <InfoBtn className="btn" onClick={() => clickInfo(popular?.results[0].id, "popular")}>
                 <BsInfoCircle className="btn-icon" /> Information
               </InfoBtn>
             </div>
@@ -127,10 +116,11 @@ function Home() {
                   onClick={onOverlayClick}
                   exit={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
+                  initial={{ opacity: 0 }}
                 />
                 <MovieDetailModal
-                  category = {selectedMovieCategory}
-                  modalMovieMatch={modalMovieMatch}
+                  category={selectedMovieCategory}
+                  movieViedo={movieViedo}
                   clickedMovie={movieDetail}
                   scrollY={scrollY.get()}
                 ></MovieDetailModal>
