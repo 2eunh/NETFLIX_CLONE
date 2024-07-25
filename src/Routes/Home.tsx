@@ -28,6 +28,7 @@ import { AnimatePresence, useScroll } from "framer-motion";
 import { Overlay } from "../styles/SliderStyled";
 import MovieDetailModal from "../Components/MovieDetailModal";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 function Home() {
   const [selectedMovieId, setSelectedMovieId] = useState<string | null>(null);
@@ -83,7 +84,7 @@ function Home() {
       ) : (
         <>
           <Banner
-            bgPhoto={makeImagePath(popular?.results[0].backdrop_path || "")}
+            bgphoto={makeImagePath(popular?.results[0].backdrop_path || "")}
           >
             <Title>{popular?.results[0].title}</Title>
             <Overview>{popular?.results[0].overview}</Overview>

@@ -1,5 +1,8 @@
+
 const API_KEY = "5c3a194094fa8ee8d190bf4351edad21";
 const BASE_PATH = "https://api.themoviedb.org/3";
+const LANGUAGE = "en"
+
 
 interface IMovie {
   id: number;
@@ -41,7 +44,7 @@ export function getNowPlaying() {
 }
 //popular
 export function getPopular() {
-  return fetch(`${BASE_PATH}/movie/popular?api_key=${API_KEY}`).then(
+  return fetch(`${BASE_PATH}/movie/popular?language=${LANGUAGE}&api_key=${API_KEY}`).then(
     (response) => response.json()
   );
 }

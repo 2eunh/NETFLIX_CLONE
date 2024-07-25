@@ -13,7 +13,7 @@ export const Loader = styled.div`
   align-items: center;
 `;
 
-export const Banner = styled.div<{ bgPhoto: string }>`
+export const Banner = styled.div<{ bgphoto: string }>`
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@ export const Banner = styled.div<{ bgPhoto: string }>`
   padding: 60px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9)),
     //배경에 그라데이션 넣어줌
-    url(${(props) => props.bgPhoto});
+    url(${(props) => props.bgphoto});
   background-size: cover;
   .btn-area {
     display: flex;

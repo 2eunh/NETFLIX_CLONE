@@ -21,10 +21,10 @@ export const Row = styled(motion.div)`
   margin: 10px 30px ;
 `;
 
-export const Box = styled(motion.div)<{ bgPhoto: string }>`
+export const Box = styled(motion.div)<{ bgphoto: string }>`
   background-color: white;
   height: 200px;
-  background-image: url(${(props) => props.bgPhoto});
+  background-image: url(${(props) => props.bgphoto});
   background-size: cover;
   background-position: center center;
   &:first-child {
@@ -40,7 +40,8 @@ export const Box = styled(motion.div)<{ bgPhoto: string }>`
 
 export const Info = styled(motion.div)`
   padding: 10px;
-  background-color: ${(props) => props.theme.black.lighter};
+  background-color: #000000ae;
+  font-weight: 600;
   opacity: 0;
   position: relative;
   width: 100%;
@@ -107,16 +108,17 @@ export const RightSlideButton = styled(motion.div)`
 
 
 export const rowVariants = {
-  hidden: {
-    x: window.outerWidth,
-  },
+  hidden: (slideDir: number) => ({
+    x: slideDir > 0 ? window.innerWidth : -window.innerWidth,
+  }),
   visible: {
     x: 0,
   },
-  exit: {
-    x: -window.outerWidth,
-  },
+  exit: (slideDir: number) => ({
+    x: slideDir < 0 ? window.innerWidth : -window.innerWidth,
+  }),
 };
+
 
 export const boxVariants = {
   normal: {
