@@ -1,46 +1,22 @@
-# Getting Started with Create React App
+## 미니 넷플리스 클론
+넷플릭스의 첫 화면을 클론 코딩
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 사용 기술 및 라이브러리
+ - recat, styled-component, motion
+### API
+ - https://www.themoviedb.org/
 
-## Available Scripts
+### 1. 화면 스크롤
+![main](https://github.com/user-attachments/assets/5e78590a-15fe-44bd-8b02-c8d932c046db)
 
-In the project directory, you can run:
+- 화면이 스크롤 되며 헤더의 backgroud가 생기도록 
+- 리스트의 첫 내용을 전체 화면에 뜨도록 구현
 
-### `npm start`
+### 2. infomation 버튼 클릭 시 상세 모달창과 유튜브 재생 되도록 구현
+![infomation](https://github.com/user-attachments/assets/b3619e26-fefd-4134-9fda-da402e4a61f0)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 3. 리스트 양방향 스크롤 구현
+![list](https://github.com/user-attachments/assets/094b7a99-7365-4805-9e2d-ab4c2284ba9b)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 4. 클릭 시 상세 모달창과 유튜브 재생 되도록 구현
+![click](https://github.com/user-attachments/assets/7af0deb6-ca5f-4285-b2bc-0bc114710a9f)
